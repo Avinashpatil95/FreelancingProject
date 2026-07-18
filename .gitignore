@@ -11,11 +11,6 @@ obj/
 *.userosscache
 *.sln.docstates
 
-# Database files
-*.db
-*.sqlite
-*.sqlite3
-
 # Logs
 *.log
 
