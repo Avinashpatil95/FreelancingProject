@@ -1,0 +1,205 @@
+@model RestaurantWebsite.Models.ViewModels.ReservationViewModel
+
+
+@{
+    ViewData["Title"] = "Book A Table";
+}
+
+
+
+
+<section class="reservation-hero">
+
+
+
+    <div class="reservation-overlay">
+
+
+
+        <div class="reservation-container">
+
+
+
+            <div class="reservation-title">
+
+
+                <h1>
+                    Book A Table
+                </h1>
+
+
+                <p>
+                    Reserve your table and enjoy an unforgettable dining experience
+                </p>
+
+
+            </div>
+
+
+
+
+
+
+
+            @if (TempData["Success"] != null)
+            {
+
+                <div class="reservation-success">
+
+                    @TempData["Success"]
+
+                </div>
+
+            }
+
+
+
+
+
+            <form asp-action="Index" method="post" class="reservation-form">
+
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+
+                        <label>
+                            Name
+                        </label>
+
+
+                        <input asp-for="CustomerName" placeholder="Enter your name" />
+
+
+                        <span asp-validation-for="CustomerName"></span>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+
+
+                        <label>
+                            Email
+                        </label>
+
+
+                        <input asp-for="Email" placeholder="Enter email" />
+
+
+                        <span asp-validation-for="Email"></span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+
+                        <label>
+                            Phone
+                        </label>
+
+
+                        <input asp-for="Phone" placeholder="Phone number" />
+
+
+                        <span asp-validation-for="Phone"></span>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="form-group">
+
+
+                        <label>
+                            Date
+                        </label>
+
+
+                        <input asp-for="ReservationDate" />
+
+
+                        <span asp-validation-for="ReservationDate"></span>
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="form-row">
+
+
+                    <div class="form-group single-field">
+
+                        <label>
+                            Number of Guests
+                        </label>
+
+
+                        <input asp-for="Guests" type="number" min="1" />
+
+
+                        <span asp-validation-for="Guests"></span>
+
+
+                    </div>
+
+
+                </div>
+
+                <button class="reserve-submit">
+
+                    Reserve Now
+
+                </button>
+
+
+
+
+
+            </form>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+@section Scripts
+{
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

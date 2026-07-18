@@ -1,0 +1,117 @@
+@model RestaurantWebsite.Models.ViewModels.MenuViewModel
+
+
+@{
+    ViewData["Title"] = "Menu";
+}
+
+
+
+
+
+<section class="menu-banner">
+
+
+<div class="menu-banner-content">
+
+
+<h1>
+Our Menu
+</h1>
+
+
+<p>
+Discover our delicious dishes
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<section class="restaurant-menu-section">
+
+
+
+<h2>
+Explore Our Dishes
+</h2>
+
+
+
+
+
+<div class="category-filter">
+
+
+<button class="category-btn active"
+        data-category="0">
+
+    All
+
+</button>
+
+
+
+
+
+@foreach(var category in Model.Categories)
+{
+
+
+<button class="category-btn"
+        data-category="@category.Id">
+
+
+    @category.Name
+
+
+</button>
+
+
+}
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="menu-grid"
+     id="menu-container">
+
+
+    <partial name="_MenuItems"
+             model="Model.MenuItems" />
+
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+@section Scripts
+{
+
+<script src="~/js/menu.js"></script>
+
+}

@@ -1,0 +1,87 @@
+@using RestaurantWebsite.Models
+
+@{
+    var banners = ViewBag.Banners as List<HomeBanner>;
+}
+
+
+@if (banners != null && banners.Any())
+{
+
+<section class="home-banner-slider">
+
+
+    <div class="banner-container">
+
+
+        @foreach(var banner in banners)
+        {
+
+            <div class="banner-slide">
+
+
+                @if(banner.MediaType.ToLower() == "video")
+                {
+
+                    <video autoplay
+                           muted
+                           loop
+                           playsinline>
+
+                        <source src="@banner.MediaUrl"
+                                type="video/mp4">
+
+                    </video>
+
+                }
+                else
+                {
+
+                    <img src="@banner.MediaUrl"
+                         alt="@banner.Title" />
+
+                }
+
+
+
+                <div class="banner-content">
+
+
+                    <h1>
+                        @banner.Title
+                    </h1>
+
+
+                    <p>
+                        @banner.Subtitle
+                    </p>
+
+
+
+                    @if(!string.IsNullOrEmpty(banner.ButtonText))
+                    {
+
+                        <a href="@banner.ButtonLink"
+                           class="banner-btn">
+
+                            @banner.ButtonText
+
+                        </a>
+
+                    }
+
+
+                </div>
+
+
+            </div>
+
+        }
+
+
+    </div>
+
+
+</section>
+
+}

@@ -1,0 +1,95 @@
+@model IEnumerable<RestaurantWebsite.Models.MenuItem>
+
+
+
+@foreach(var item in Model)
+{
+
+
+<div class="restaurant-menu-card">
+
+
+
+
+
+    @if(item.ImageUrl.EndsWith(".mp4"))
+    {
+
+
+        <video class="menu-media"
+               autoplay
+               muted
+               loop
+               playsinline>
+
+
+            <source src="@item.ImageUrl"
+                    type="video/mp4">
+
+
+        </video>
+
+
+    }
+    else
+    {
+
+
+        <img class="menu-media"
+             src="@item.ImageUrl"
+             alt="@item.Name" />
+
+
+    }
+
+
+
+
+
+
+    <div class="restaurant-menu-content">
+
+
+        <h3>
+            @item.Name
+        </h3>
+
+
+
+
+        <p>
+            @item.Description
+        </p>
+
+
+
+
+
+        <div class="menu-category">
+
+            @item.Category.Name
+
+        </div>
+
+
+
+
+
+
+        <div class="menu-price">
+
+            ₹ @item.Price
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+}
