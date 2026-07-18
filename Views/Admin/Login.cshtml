@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Admin Login";
+}
+
+
+<div class="container mt-5">
+
+
+<h2>
+Admin Login
+</h2>
+
+
+
+<form method="post">
+
+
+<div class="mb-3">
+
+<input class="form-control"
+       name="email"
+       placeholder="Email"/>
+
+</div>
+
+
+
+<div class="mb-3">
+
+<input class="form-control"
+       type="password"
+       name="password"
+       placeholder="Password"/>
+
+</div>
+
+
+
+<button class="btn btn-dark">
+Login
+</button>
+
+
+
+</form>
+
+
+
+@if(ViewBag.Error != null)
+{
+
+<p class="text-danger">
+@ViewBag.Error
+</p>
+
+}
+
+
+</div>

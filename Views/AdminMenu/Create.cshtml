@@ -1,0 +1,210 @@
+@model RestaurantWebsite.Models.ViewModels.AdminMenuViewModel
+
+
+<div class="container mt-5">
+
+
+<h2>
+Add Menu Item
+</h2>
+
+
+
+@if(TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+
+        @TempData["Success"]
+
+    </div>
+}
+
+
+
+
+<form asp-action="Create"
+      method="post"
+      enctype="multipart/form-data">
+
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Name
+</label>
+
+
+<input asp-for="Name"
+       class="form-control"/>
+
+<span asp-validation-for="Name"
+      class="text-danger">
+</span>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Description
+</label>
+
+
+<textarea asp-for="Description"
+          class="form-control">
+</textarea>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Price
+</label>
+
+
+<input asp-for="Price"
+       class="form-control"/>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Category
+</label>
+
+
+<select asp-for="CategoryId"
+        class="form-control">
+
+
+<option value="">
+Select Category
+</option>
+
+
+
+@foreach(var category in ViewBag.Categories)
+{
+
+<option value="@category.Id">
+
+@category.Name
+
+</option>
+
+}
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="mb-3">
+
+<label>
+Upload Image / Video
+</label>
+
+
+<input asp-for="MediaFile"
+       type="file"
+       class="form-control"/>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="form-check">
+
+<input asp-for="IsFeatured"
+       class="form-check-input"/>
+
+
+<label>
+Featured
+</label>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="form-check">
+
+<input asp-for="IsAvailable"
+       class="form-check-input"/>
+
+
+<label>
+Available
+</label>
+
+
+</div>
+
+
+
+
+
+
+
+<button type="submit"
+        class="btn btn-primary mt-4">
+
+Save Menu Item
+
+</button>
+
+
+
+</form>
+
+
+</div>

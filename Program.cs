@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RestaurantWebsite.Data;
+using RestaurantWebsite.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,36 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 // =======================
+// IDENTITY CONFIGURATION
+// ADMIN LOGIN
+// =======================
+
+
+builder.Services
+    .AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+
+        options.Password.RequireDigit = true;
+
+        options.Password.RequireLowercase = true;
+
+        options.Password.RequireUppercase = true;
+
+        options.Password.RequireNonAlphanumeric = true;
+
+        options.Password.RequiredLength = 8;
+
+
+    })
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+
+
+
+
+
+// =======================
 // MVC SERVICES
 // =======================
 
@@ -37,6 +69,7 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddRazorPages();
+
 
 
 
@@ -73,6 +106,7 @@ var app = builder.Build();
 // =======================
 // DATABASE MIGRATION
 // + INITIAL DATA
+// + CREATE ADMIN
 // =======================
 
 
@@ -89,15 +123,22 @@ using (var scope = app.Services.CreateScope())
             .GetRequiredService<ApplicationDbContext>();
 
 
-        // Apply pending migrations
+        // Apply migrations
 
         db.Database.Migrate();
 
 
 
-        // Insert default data
+        // Existing restaurant seed data
 
         DbInitializer.Initialize(db);
+
+
+
+
+        // Create admin account
+
+        await AdminInitializer.Initialize(services);
 
 
     }
@@ -160,8 +201,12 @@ app.UseSession();
 
 
 
-app.UseAuthorization();
+// IMPORTANT FOR IDENTITY
 
+app.UseAuthentication();
+
+
+app.UseAuthorization();
 
 
 
@@ -185,6 +230,8 @@ app.MapControllerRoute(
 
 
 app.MapRazorPages();
+
+
 
 
 

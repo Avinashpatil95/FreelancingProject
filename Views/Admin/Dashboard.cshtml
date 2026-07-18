@@ -1,0 +1,133 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+<div class="container mt-5">
+
+
+<h1 class="mb-4">
+Restaurant Admin Dashboard
+</h1>
+
+
+
+<div class="row g-4">
+
+
+<div class="col-md-3">
+
+<div class="card shadow p-4 text-center">
+
+<h4>
+Menu Items
+</h4>
+
+<h2>
+@ViewBag.MenuCount
+</h2>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow p-4 text-center">
+
+<h4>
+Categories
+</h4>
+
+<h2>
+@ViewBag.CategoryCount
+</h2>
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow p-4 text-center">
+
+<h4>
+Reservations
+</h4>
+
+<h2>
+@ViewBag.ReservationCount
+</h2>
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="col-md-3">
+
+<div class="card shadow p-4 text-center">
+
+<h4>
+Featured Items
+</h4>
+
+<h2>
+@ViewBag.FeaturedCount
+</h2>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+<hr />
+
+
+<a href="/AdminMenu"
+class="btn btn-dark">
+
+Manage Menu
+
+</a>
+
+
+
+<a href="/Reservation"
+class="btn btn-primary">
+
+Reservations
+
+</a>
+
+
+
+<a href="/Admin/Logout"
+class="btn btn-danger">
+
+Logout
+
+</a>
+
+
+
+</div>
