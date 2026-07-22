@@ -91,7 +91,7 @@ HERO
             rgba(0, 0, 0, .75),
             rgba(0, 0, 0, .35)),
 
-        url('/images/hero.jpeg');
+        url('wwwroot/Images/Hero.jpeg');
 
 
 
@@ -586,7 +586,7 @@ html {
             rgba(0, 0, 0, .55)),
 
 
-        url('/images/menu-banner.jpg');
+        url('wwwroot/Images/menu-banner.jpg');
 
 
 
@@ -1013,7 +1013,7 @@ CATEGORY FILTER
     background-image:
         linear-gradient(rgba(0, 0, 0, .55),
             rgba(0, 0, 0, .55)),
-        url('/Images/Reservation_bg.jpeg');
+        url('wwwroot/Images/Reservation_bg.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
