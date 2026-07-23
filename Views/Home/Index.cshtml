@@ -1,287 +1,111 @@
 ﻿@model RestaurantWebsite.Models.ViewModels.HomeViewModel
 
-
 @{
     ViewData["Title"] = "Home";
 }
 
-
-
 <section class="hero">
 
-
     <div class="hero-content">
-
 
         <h1 class="hero-title">
             Taste That Creates Memories
         </h1>
 
-
-
         <p class="hero-subtitle">
-
             Experience handcrafted dishes prepared with passion
             and served with love.
-
         </p>
-
-
-
 
         <a href="/Reservation/Index"
            class="reserve-btn">
-
             Reserve A Table
-
         </a>
 
-
     </div>
-
-
-
-
 
     <a href="#featured-menu"
        class="scroll-down">
-
         ↓
-
     </a>
-
 
 </section>
 
+@await Html.PartialAsync("_SpecialSlider", Model.SliderItems)
 
+<section class="featured-section" id="featured-menu">
 
-
-
-@await Html.PartialAsync(
-    "_SpecialSlider",
-    Model.SliderItems
-)
-
-
-
-
-
-
-
-<section class="featured-section"
-         id="featured-menu">
-
-
-    <h2>
-        Featured Menu
-    </h2>
-
-
-
-
+    <h2>Featured Menu</h2>
 
     <div class="menu-gallery">
 
-
-
-        @if(Model.FeaturedItems != null && Model.FeaturedItems.Any())
+        @if (Model.FeaturedItems != null && Model.FeaturedItems.Any())
         {
-
-
-            foreach(var item in Model.FeaturedItems)
+            foreach (var item in Model.FeaturedItems)
             {
-
-
                 <div class="menu-card">
 
-
-
-                    @if(item.ImageUrl.ToLower().EndsWith(".mp4"))
+                    @if (item.ImageData != null)
                     {
-
-
-                        <video autoplay
-                               muted
-                               loop
-                               playsinline>
-
-
-                            <source src="@item.ImageUrl"
-                                    type="video/mp4">
-
-
-                        </video>
-
-
-                    }
-                    else
-                    {
-
-                        <img src="@item.ImageUrl"
+                        <img src="@Url.Action("GetImage", "Menu", new { id = item.Id })"
                              alt="@item.Name" />
-
                     }
-
-
-
-
-
-
 
                     <div class="menu-card-content">
 
+                        <h3>@item.Name</h3>
 
-                        <h3>
-                            @item.Name
-                        </h3>
+                        <p>@item.Description</p>
 
-
-
-
-                        <p>
-                            @item.Description
-                        </p>
-
-
-
-
-                        <span>
-                            ₹ @item.Price
-                        </span>
-
+                        <span>₹ @item.Price</span>
 
                     </div>
 
-
                 </div>
-
-
             }
-
-
         }
         else
         {
-
-            <h4>
-                No featured dishes available
-            </h4>
-
+            <h4>No featured dishes available</h4>
         }
 
-
     </div>
-
 
 </section>
 
-
-
-
-
-
-
-
-
 <section class="chef-section">
 
-
-    <h2>
-        Chef's Special
-    </h2>
-
-
-
-
+    <h2>Chef's Special</h2>
 
     <div class="chef-container">
 
-
-
-        @if(Model.ChefSpecialItems != null &&
-            Model.ChefSpecialItems.Any())
+        @if (Model.ChefSpecialItems != null &&
+             Model.ChefSpecialItems.Any())
         {
-
-
-            foreach(var item in Model.ChefSpecialItems)
+            foreach (var item in Model.ChefSpecialItems)
             {
-
-
                 <div class="special-card">
 
-
-
-                    @if(item.ImageUrl.ToLower().EndsWith(".mp4"))
+                    @if (item.ImageData != null)
                     {
-
-
-                        <video autoplay
-                               muted
-                               loop
-                               playsinline>
-
-
-                            <source src="@item.ImageUrl"
-                                    type="video/mp4">
-
-
-                        </video>
-
-
-                    }
-                    else
-                    {
-
-                        <img src="@item.ImageUrl"
+                        <img src="@Url.Action("GetImage", "Menu", new { id = item.Id })"
                              alt="@item.Name" />
-
                     }
 
+                    <h3>@item.Name</h3>
 
+                    <p>@item.Description</p>
 
-
-
-
-
-                    <h3>
-                        @item.Name
-                    </h3>
-
-
-
-
-                    <p>
-                        @item.Description
-                    </p>
-
-
-
-
-                    <span>
-                        ₹ @item.Price
-                    </span>
-
-
+                    <span>₹ @item.Price</span>
 
                 </div>
-
-
             }
-
-
         }
         else
         {
-
-            <h4>
-                No chef specials available
-            </h4>
-
+            <h4>No chef specials available</h4>
         }
 
-
-
     </div>
-
 
 </section>

@@ -2,7 +2,6 @@ namespace RestaurantWebsite.Models
 {
     public class MenuItem
     {
-
         public int Id { get; set; }
 
 
@@ -15,8 +14,12 @@ namespace RestaurantWebsite.Models
         public decimal Price { get; set; }
 
 
-        public string ImageUrl { get; set; } = string.Empty;
+        // Image stored directly in SQLite
+        public byte[]? ImageData { get; set; }
 
+
+        // Example: image/jpeg, image/png
+        public string? ImageType { get; set; }
 
 
         public int CategoryId { get; set; }
@@ -25,11 +28,9 @@ namespace RestaurantWebsite.Models
         public Category Category { get; set; } = null!;
 
 
-
         public bool IsFeatured { get; set; }
 
 
         public bool IsAvailable { get; set; }
-
     }
 }

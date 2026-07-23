@@ -13,27 +13,13 @@ namespace RestaurantWebsite.Controllers
     public class AdminMenuController : Controller
     {
 
-
         private readonly ApplicationDbContext _context;
 
-        private readonly IWebHostEnvironment _environment;
 
-
-
-        public AdminMenuController(
-            ApplicationDbContext context,
-            IWebHostEnvironment environment)
+        public AdminMenuController(ApplicationDbContext context)
         {
-
             _context = context;
-
-            _environment = environment;
-
         }
-
-
-
-
 
 
 
@@ -43,18 +29,13 @@ namespace RestaurantWebsite.Controllers
 
             var items =
                 await _context.MenuItems
-                .Include(x=>x.Category)
+                .Include(x => x.Category)
                 .ToListAsync();
-
 
 
             return View(items);
 
         }
-
-
-
-
 
 
 
@@ -76,10 +57,6 @@ namespace RestaurantWebsite.Controllers
 
 
 
-
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -87,122 +64,46 @@ namespace RestaurantWebsite.Controllers
         {
 
 
-
             ViewBag.Categories =
                 await _context.Categories.ToListAsync();
 
 
 
-
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
                 return View(model);
-
             }
 
 
 
+            byte[]? imageData = null;
+
+            string? imageType = null;
 
 
-            string imagePath = "";
-
-
-
-
-
-
-            // FILE UPLOAD
 
             if(model.MediaFile != null &&
                model.MediaFile.Length > 0)
             {
 
+                using var memoryStream =
+                    new MemoryStream();
 
 
-                string folder =
-                    Path.Combine(
-                        _environment.WebRootPath,
-                        "Images",
-                        "Menu");
-
-
+                await model.MediaFile
+                    .CopyToAsync(memoryStream);
 
 
 
-                if(!Directory.Exists(folder))
-                {
-
-                    Directory.CreateDirectory(folder);
-
-                }
+                imageData =
+                    memoryStream.ToArray();
 
 
 
-
-
-
-
-                string fileName =
-                    Guid.NewGuid().ToString()
-                    +
-                    Path.GetExtension(
-                        model.MediaFile.FileName);
-
-
-
-
-
-
-                string filePath =
-                    Path.Combine(
-                        folder,
-                        fileName);
-
-
-
-
-
-
-
-                using(var stream =
-                    new FileStream(
-                        filePath,
-                        FileMode.Create))
-                {
-
-                    await model.MediaFile
-                    .CopyToAsync(stream);
-
-                }
-
-
-
-
-
-
-
-                imagePath =
-                    "/Images/Menu/" + fileName;
-
-
-
-                Console.WriteLine(
-                    "IMAGE SAVED: "
-                    + imagePath);
+                imageType =
+                    model.MediaFile.ContentType;
 
             }
-            else
-            {
-
-                Console.WriteLine(
-                    "NO FILE RECEIVED");
-
-            }
-
-
-
-
 
 
 
@@ -223,7 +124,10 @@ namespace RestaurantWebsite.Controllers
                 CategoryId = model.CategoryId,
 
 
-                ImageUrl = imagePath,
+                ImageData = imageData,
+
+
+                ImageType = imageType,
 
 
                 IsFeatured = model.IsFeatured,
@@ -236,17 +140,10 @@ namespace RestaurantWebsite.Controllers
 
 
 
-
-
-
-
-
             _context.MenuItems.Add(item);
 
 
             await _context.SaveChangesAsync();
-
-
 
 
 
@@ -255,14 +152,9 @@ namespace RestaurantWebsite.Controllers
 
 
 
-
             return RedirectToAction(nameof(Index));
 
-
         }
-
-
-
 
 
 
@@ -272,16 +164,13 @@ namespace RestaurantWebsite.Controllers
         public async Task<IActionResult> Delete(int id)
         {
 
-
             var item =
-                await _context.MenuItems
-                .FindAsync(id);
+                await _context.MenuItems.FindAsync(id);
 
 
 
             if(item != null)
             {
-
 
                 _context.MenuItems.Remove(item);
 
@@ -292,13 +181,10 @@ namespace RestaurantWebsite.Controllers
 
 
 
-
             return RedirectToAction(nameof(Index));
 
         }
 
 
-
     }
-
 }

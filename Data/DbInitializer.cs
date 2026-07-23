@@ -1,19 +1,20 @@
+using Microsoft.AspNetCore.Hosting;
 using RestaurantWebsite.Models;
 
 
 namespace RestaurantWebsite.Data
 {
-
-
     public static class DbInitializer
     {
-
-
-        public static void Initialize(ApplicationDbContext context)
+        public static void Initialize(
+            ApplicationDbContext context,
+            IWebHostEnvironment environment)
         {
 
 
+            // =======================
             // Categories
+            // =======================
 
             if (!context.Categories.Any())
             {
@@ -54,7 +55,42 @@ namespace RestaurantWebsite.Data
 
 
 
+            // =======================
+            // Helper for loading images
+            // =======================
+
+            byte[]? LoadImage(string fileName)
+            {
+
+                string path = Path.Combine(
+                    environment.WebRootPath,
+                    "images",
+                    "menu",
+                    fileName
+                );
+
+
+                if (!File.Exists(path))
+                {
+                    Console.WriteLine(
+                        "Image not found: " + path
+                    );
+
+                    return null;
+                }
+
+
+                return File.ReadAllBytes(path);
+
+            }
+
+
+
+
+
+            // =======================
             // Menu Items
+            // =======================
 
             if (!context.MenuItems.Any())
             {
@@ -86,8 +122,6 @@ namespace RestaurantWebsite.Data
 
 
 
-
-
                 context.MenuItems.AddRange(
 
 
@@ -101,8 +135,13 @@ namespace RestaurantWebsite.Data
 
                         Price = 250,
 
-                        ImageUrl =
-                        "/images/menu/paneer-tikka.jpg",
+
+                        ImageData =
+                        LoadImage("paneer-tikka.jpg"),
+
+                        ImageType =
+                        "image/jpeg",
+
 
                         CategoryId = starters.Id,
 
@@ -125,8 +164,13 @@ namespace RestaurantWebsite.Data
 
                         Price = 350,
 
-                        ImageUrl =
-                        "/images/menu/biryani.jpg",
+
+                        ImageData =
+                        LoadImage("biryani.jpg"),
+
+                        ImageType =
+                        "image/jpeg",
+
 
                         CategoryId = mainCourse.Id,
 
@@ -150,8 +194,13 @@ namespace RestaurantWebsite.Data
 
                         Price = 450,
 
-                        ImageUrl =
-                        "/images/menu/butter-chicken.jpg",
+
+                        ImageData =
+                        LoadImage("butter-chicken.jpg"),
+
+                        ImageType =
+                        "image/jpeg",
+
 
                         CategoryId = mainCourse.Id,
 
@@ -175,8 +224,13 @@ namespace RestaurantWebsite.Data
 
                         Price = 180,
 
-                        ImageUrl =
-                        "/images/menu/chocolate-cake.jpg",
+
+                        ImageData =
+                        LoadImage("chocolate-cake.jpg"),
+
+                        ImageType =
+                        "image/jpeg",
+
 
                         CategoryId = desserts.Id,
 
@@ -200,8 +254,13 @@ namespace RestaurantWebsite.Data
 
                         Price = 80,
 
-                        ImageUrl =
-                        "/images/menu/lime-soda.jpg",
+
+                        ImageData =
+                        LoadImage("lime-soda.jpg"),
+
+                        ImageType =
+                        "image/jpeg",
+
 
                         CategoryId = drinks.Id,
 
@@ -218,8 +277,15 @@ namespace RestaurantWebsite.Data
 
                 context.SaveChanges();
 
-
             }
+
+
+
+
+
+            // =======================
+            // Home Banners
+            // =======================
 
             if (!context.HomeBanners.Any())
             {
@@ -228,17 +294,23 @@ namespace RestaurantWebsite.Data
 
                     new HomeBanner
                     {
-                        Title = "Taste That Creates Memories",
+                        Title =
+                        "Taste That Creates Memories",
 
-                        Subtitle = "Experience handcrafted dishes prepared with passion",
+                        Subtitle =
+                        "Experience handcrafted dishes prepared with passion",
 
-                        MediaUrl = "/Images/banner1.jpg",
+                        MediaUrl =
+                        "/Images/banner1.jpg",
 
-                        MediaType = "image",
+                        MediaType =
+                        "image",
 
-                        ButtonText = "Book A Table",
+                        ButtonText =
+                        "Book A Table",
 
-                        ButtonLink = "/Reservation",
+                        ButtonLink =
+                        "/Reservation",
 
                         IsActive = true,
 
@@ -248,17 +320,23 @@ namespace RestaurantWebsite.Data
 
                     new HomeBanner
                     {
-                        Title = "Fine Dining Experience",
+                        Title =
+                        "Fine Dining Experience",
 
-                        Subtitle = "Fresh ingredients and unforgettable flavours",
+                        Subtitle =
+                        "Fresh ingredients and unforgettable flavours",
 
-                        MediaUrl = "/Videos/banner2.mp4",
+                        MediaUrl =
+                        "/Videos/banner2.mp4",
 
-                        MediaType = "video",
+                        MediaType =
+                        "video",
 
-                        ButtonText = "Explore Menu",
+                        ButtonText =
+                        "Explore Menu",
 
-                        ButtonLink = "/Menu",
+                        ButtonLink =
+                        "/Menu",
 
                         IsActive = true,
 
@@ -273,9 +351,5 @@ namespace RestaurantWebsite.Data
             }
 
         }
-
-
     }
-
-
 }

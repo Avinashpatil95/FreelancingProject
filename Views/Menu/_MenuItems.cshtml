@@ -1,49 +1,20 @@
 @model IEnumerable<RestaurantWebsite.Models.MenuItem>
 
 
-
 @foreach(var item in Model)
 {
-
 
 <div class="restaurant-menu-card">
 
 
-
-
-
-    @if(item.ImageUrl.EndsWith(".mp4"))
+    @if(item.ImageData != null)
     {
-
-
-        <video class="menu-media"
-               autoplay
-               muted
-               loop
-               playsinline>
-
-
-            <source src="@item.ImageUrl"
-                    type="video/mp4">
-
-
-        </video>
-
-
-    }
-    else
-    {
-
 
         <img class="menu-media"
-             src="@item.ImageUrl"
+             src="@Url.Action("GetImage","Menu",new {id=item.Id})"
              alt="@item.Name" />
 
-
     }
-
-
-
 
 
 
@@ -55,14 +26,9 @@
         </h3>
 
 
-
-
         <p>
             @item.Description
         </p>
-
-
-
 
 
         <div class="menu-category">
@@ -73,9 +39,6 @@
 
 
 
-
-
-
         <div class="menu-price">
 
             ₹ @item.Price
@@ -83,13 +46,9 @@
         </div>
 
 
-
     </div>
 
 
-
 </div>
-
-
 
 }

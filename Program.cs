@@ -131,7 +131,7 @@ using (var scope = app.Services.CreateScope())
 
         // Existing restaurant seed data
 
-        DbInitializer.Initialize(db);
+        DbInitializer.Initialize(db, app.Environment);
 
 
 

@@ -1,146 +1,81 @@
 @model IEnumerable<RestaurantWebsite.Models.MenuItem>
 
-
 <div class="container mt-5">
 
+    <h2>Manage Menu</h2>
 
-<h2>
-Manage Menu
-</h2>
+    <a href="/AdminMenu/Create" class="btn btn-success">
+        + Add Menu Item
+    </a>
 
+    <table class="table mt-4">
 
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Available</th>
+                <th>Action</th>
+            </tr>
+        </thead>
 
-<a href="/AdminMenu/Create"
-class="btn btn-success">
+        <tbody>
 
-+ Add Menu Item
+            @foreach (var item in Model)
+            {
+                <tr>
 
-</a>
+                    <td>
 
+                        @if (item.ImageData != null)
+                        {
+                            <img src="@Url.Action("GetImage", "Menu", new { id = item.Id })"
+                                 style="width:80px;height:60px;object-fit:cover;" />
+                        }
 
+                    </td>
 
+                    <td>
+                        @item.Name
+                    </td>
 
-<table class="table mt-4">
+                    <td>
+                        @item.Category?.Name
+                    </td>
 
+                    <td>
+                        ₹ @item.Price
+                    </td>
 
-<thead>
+                    <td>
 
-<tr>
+                        @if (item.IsAvailable)
+                        {
+                            <span class="text-success">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">No</span>
+                        }
 
-<th>
-Image
-</th>
+                    </td>
 
-<th>
-Name
-</th>
+                    <td>
 
-<th>
-Category
-</th>
+                        <a class="btn btn-danger"
+                           href="/AdminMenu/Delete/@item.Id">
+                            Delete
+                        </a>
 
-<th>
-Price
-</th>
+                    </td>
 
-<th>
-Available
-</th>
+                </tr>
+            }
 
-<th>
-Action
-</th>
+        </tbody>
 
-</tr>
-
-</thead>
-
-
-
-<tbody>
-
-
-@foreach(var item in Model)
-{
-
-<tr>
-
-
-<td>
-
-@if(!string.IsNullOrEmpty(item.ImageUrl))
-{
-
-<img src="@item.ImageUrl"
-style="width:80px;height:60px;object-fit:cover;" />
-
-}
-
-</td>
-
-
-
-<td>
-@item.Name
-</td>
-
-
-
-<td>
-@item.Category?.Name
-</td>
-
-
-
-<td>
-₹ @item.Price
-</td>
-
-
-
-
-<td>
-
-@if(item.IsAvailable)
-{
-    <span class="text-success">
-    Yes
-    </span>
-}
-else
-{
-    <span class="text-danger">
-    No
-    </span>
-}
-
-</td>
-
-
-
-
-<td>
-
-<a class="btn btn-danger"
-href="/AdminMenu/Delete/@item.Id">
-
-Delete
-
-</a>
-
-
-</td>
-
-
-</tr>
-
-}
-
-
-</tbody>
-
-
-</table>
-
+    </table>
 
 </div>
